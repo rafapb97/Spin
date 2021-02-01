@@ -1,10 +1,14 @@
 [paths]
+path_wd = /home/matthijspals/spin
+dataset_path = /home/matthijspals/spin
 filename_ann = mnist_cnn
+filename_snn = mnist_scnn
 
 [tools]
 evaluate_ann = True
 normalize = False
 scale_weights_exp = True
+simulate = False
 
 [simulation]
 simulator = spiNNaker
