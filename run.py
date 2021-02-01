@@ -19,12 +19,12 @@ network = []
 
 #cell defaults
 cell_params = {
-'v_thresh' : 1,
-'tau_refrac' : 0,
-'v_reset' : 0,
-'v_rest' : 0,
-'cm' : 1,
-'tau_m' : 1000,
+#'v_thresh' : 1,
+#'tau_refrac' : 0,
+#'v_reset' : 0,
+#'v_rest' : 0,
+#'cm' : 1,
+#'tau_m' : 1000,
 'tau_syn_E' : 0.01,
 'tau_syn_I' : 0.01,
 #'delay' : 0,
@@ -72,7 +72,7 @@ network[0].set(rate=rates)
 
 
 #run simulation
-pynn.run(1000.0)
+pynn.run(200.0)
 
 #get spikes
 spikes_brains = list()
