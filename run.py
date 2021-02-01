@@ -87,8 +87,9 @@ for brain in network:
     spikes_brains.append(brain.get_data("spikes").segments[0].spiketrains)
 #spikes_inh = stim_inh.get_data("spikes").segments[0].spiketrains
 #spikes_exc = stim_exc.get_data("spikes").segments[0].spiketrains
+pynn.end()
 
-for spikes_brain in spikes_brains:
+for i, spikes_brain in zip(range(len(network)), spikes_brains):
     fig = plt.figure(figsize=(12, 6))
     grid = gs.GridSpec(3, 1, height_ratios=(1, 1, 4))
 
@@ -102,13 +103,11 @@ for spikes_brain in spikes_brains:
     mn_signal, mn_times = np.histogram(
         mn_spiketimes, bins=np.arange(0.0, 1000.0, 3.0))
 
-    ax_spikes.set_xlabel(
-        r"time [ms]   Run with inhibition connection probability. " )
-    ax_spikes.set_ylabel(r"")
+    ax_spikes.set_xlabel("time [ms] layer" + str(i) )
+    ax_spikes.set_ylabel("")
 
-    ax_spikes.set_yticks(np.arange(0, 10, 1))
-    ax_spikes.set_yticklabels(["", "", "MN", "", "", "", "", "~MN", "", ""])
-    ax_spikes.set_xlim(-1, 1001)
+    #ax_spikes.set_yticks(np.arange(0, 10, 1))
+    #ax_spikes.set_yticklabels(["", "", "MN", "", "", "", "", "~MN", "", ""])
+    #ax_spikes.set_xlim(-1, 1001)
 
-pynn.end()
-
+    fig.savefig("spikes layer: " + str(i) + ".png")
