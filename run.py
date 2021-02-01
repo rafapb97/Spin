@@ -72,7 +72,7 @@ network[0].set(rate=rates)
 
 
 #run simulation
-pynn.run(1000.0)
+pynn.run(2000.0)
 
 #get spikes
 spikes_brains = list()
@@ -102,6 +102,6 @@ for i, spikes_brain in zip(range(len(network)), spikes_brains):
 
     #ax_spikes.set_yticks(np.arange(0, 10, 1))
     #ax_spikes.set_yticklabels(["", "", "MN", "", "", "", "", "~MN", "", ""])
-    #ax_spikes.set_xlim(-1, 1001)
+    ax_spikes.set_xlim(-1, 1001)
 
     fig.savefig("spikes layer: " + str(i) + ".png")
