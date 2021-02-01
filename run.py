@@ -7,35 +7,32 @@ import matplotlib.gridspec as gs
 
 import pyNN.spiNNaker as pynn
 
-
 print (pynn.IF_cond_exp.default_parameters)
+
+#set sim parameters
+sim_time = 200
+dt = 0.1
+
+#load data
 train_data = np.load("x_test.npz")
 data = train_data['arr_0'][0]
 
-pynn.setup(0.1)
+#setup pynn
+pynn.setup(dt)
 
 #create network
 network = []
 
 #cell defaults
 cell_params = {
-#'v_thresh' : 1,
-#'tau_refrac' : 0,
-#'v_reset' : 0,
-#'v_rest' : 0,
-#'cm' : 1,
-#'tau_m' : 1000,
+'v_thresh' : 1,
+'tau_refrac' : 0,
+'v_reset' : 0,
+'v_rest' : 0,
+'cm' : 1,
+'tau_m' : 1000,
 'tau_syn_E' : 0.01,
-'tau_syn_I' : 0.01,
-#'delay' : 0,
-#'binarize_weights' : False,
-#'quantize_weights' : False,
-#'scaling_factor' : 10000000,
-#'payloads' : False,
-#'reset' : Reset by subtraction,
-#'leak' : False,
-#'bias_relaxation' : False
-}
+'tau_syn_I' : 0.01}
 
 #create populations
 
@@ -72,7 +69,7 @@ network[0].set(rate=rates)
 
 
 #run simulation
-pynn.run(200.0)
+pynn.run(sim_time)
 
 #get spikes
 spikes_brains = list()
@@ -95,13 +92,13 @@ for i, spikes_brain in zip(range(len(network)), spikes_brains):
 
     mn_spiketimes = [time for spikes in spikes_brain for time in spikes]
     mn_signal, mn_times = np.histogram(
-        mn_spiketimes, bins=np.arange(0.0, 1000.0, 3.0))
+        mn_spiketimes, bins=np.arange(0.0, sim_time, 3.0))
 
     ax_spikes.set_xlabel("time [ms] layer" + str(i) )
     ax_spikes.set_ylabel("")
 
     #ax_spikes.set_yticks(np.arange(0, 10, 1))
     #ax_spikes.set_yticklabels(["", "", "MN", "", "", "", "", "~MN", "", ""])
-    ax_spikes.set_xlim(-1, 1001)
+    ax_spikes.set_xlim(-1, sim_time+1)
 
     fig.savefig("spikes layer: " + str(i) + ".png")
