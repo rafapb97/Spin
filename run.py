@@ -14,7 +14,7 @@ data = train_data['arr_0'][0]
 
 pynn.setup(0.1)
 
-#create Populations
+#create network
 network = []
 
 #cell defaults
@@ -27,38 +27,28 @@ cell_params = {
 'tau_m' : 1000,
 'tau_syn_E' : 0.01,
 'tau_syn_I' : 0.01,
-'delay' : 0,
-'binarize_weights' : False,
-'quantize_weights' : False,
-'scaling_factor' : 10000000,
-'payloads' : False,
+#'delay' : 0,
+#'binarize_weights' : False,
+#'quantize_weights' : False,
+#'scaling_factor' : 10000000,
+#'payloads' : False,
 #'reset' : Reset by subtraction,
-'leak' : False,
-'bias_relaxation' : False
+#'leak' : False,
+#'bias_relaxation' : False
 }
-#cell_params = {'tau_refrac':0,'v_thresh':1,'tau_syn_E':0.01, 'tau_syn_I':0.01}
 
-"""
-opulation(
-            np.asscalar(np.prod(layer.output_shape[1:], dtype=np.int)),
-            self.sim.IF_curr_exp, self.cellparams, label=layer.name))
+#create populations
 
-"""
-"""
-cell_params = {'tau_refrac':2.0,'v_thresh':-50.0,'tau_syn_E':2.0, 'tau_syn_I':2.0}
-output_population = Population(2, IF_curr_alpha, cell_params, label="output")
-"""
-#SpikeSourcePoisson()
-layer1 = pynn.Population(784, pynn.SpikeSourcePoisson())
+layer1 = pynn.Population(784, pynn.SpikeSourcePoisson(), label='InputLayer')
 layer1.record("spikes")
 network.append(layer1)
 
 
-layer2 = pynn.Population(676, pynn.IF_cond_exp())#, cell_params)
+layer2 = pynn.Population(676, pynn.IF_curr_exp, cell_params)
 layer2.record("spikes")
 network.append(layer2)
 
-layer3 = pynn.Population(10, pynn.IF_cond_exp())#, cell_params)
+layer3 = pynn.Population(10, pynn.IF_cond_exp, cell_params)
 layer3.record("spikes")
 network.append(layer3)
 
@@ -80,15 +70,19 @@ rescale_fac = 1000/(1000*0.1)
 rates = 1000 * x_flat / rescale_fac
 network[0].set(rate=rates)
 
+
+#run simulation
 pynn.run(1000.0)
 
+#get spikes
 spikes_brains = list()
 for brain in network:
     spikes_brains.append(brain.get_data("spikes").segments[0].spiketrains)
-#spikes_inh = stim_inh.get_data("spikes").segments[0].spiketrains
-#spikes_exc = stim_exc.get_data("spikes").segments[0].spiketrains
+
+#end simulation
 pynn.end()
 
+#generate some plots
 for i, spikes_brain in zip(range(len(network)), spikes_brains):
     fig = plt.figure(figsize=(12, 6))
     grid = gs.GridSpec(3, 1, height_ratios=(1, 1, 4))
