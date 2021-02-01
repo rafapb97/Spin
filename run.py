@@ -48,7 +48,7 @@ layer2 = pynn.Population(676, pynn.IF_curr_exp, cell_params)
 layer2.record("spikes")
 network.append(layer2)
 
-layer3 = pynn.Population(10, pynn.IF_cond_exp, cell_params)
+layer3 = pynn.Population(10, pynn.IF_curr_exp, cell_params)
 layer3.record("spikes")
 network.append(layer3)
 
@@ -72,7 +72,7 @@ network[0].set(rate=rates)
 
 
 #run simulation
-pynn.run(2000.0)
+pynn.run(1000.0)
 
 #get spikes
 spikes_brains = list()
