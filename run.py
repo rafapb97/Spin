@@ -24,7 +24,7 @@ pynn.setup(dt)
 network = []
 
 #cell defaults
-cell_params = {
+"""cell_params = {
 'v_thresh' : 1,
 'tau_refrac' : 0,
 'v_reset' : 0,
@@ -32,7 +32,7 @@ cell_params = {
 'cm' : 1,
 'tau_m' : 1000,
 'tau_syn_E' : 0.01,
-'tau_syn_I' : 0.01}
+'tau_syn_I' : 0.01}"""
 
 #create populations
 
@@ -41,11 +41,11 @@ layer1.record("spikes")
 network.append(layer1)
 
 
-layer2 = pynn.Population(676, pynn.IF_curr_exp, cell_params)
+layer2 = pynn.Population(676, pynn.IF_curr_exp)
 layer2.record("spikes")
 network.append(layer2)
 
-layer3 = pynn.Population(10, pynn.IF_curr_exp, cell_params)
+layer3 = pynn.Population(10, pynn.IF_curr_exp)
 layer3.record("spikes")
 network.append(layer3)
 
