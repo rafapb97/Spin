@@ -7,7 +7,7 @@ import matplotlib.gridspec as gs
 
 import pyNN.spiNNaker as pynn
 
-print (pynn.IF_cond_exp.default_parameters)
+#print (pynn.IF_cond_exp.default_parameters)
 
 #set sim parameters
 sim_time = 1000
@@ -20,13 +20,13 @@ train_labels = np.load("y_test.npz")
 #print("Corr is: " + str(train_labels['arr_0'][0]))
 #setup pynn
 pynn.setup(dt)
-
+pynn.set_number_of_neurons_per_core(pynn.IF_curr_exp, 64)
 #create network
 network = []
 
 #cell defaults
 cell_params = {
-'v_thresh' : 0.01,
+'v_thresh' : 1,
 'tau_refrac' : 0,
 'v_reset' : 0,
 'v_rest' : 0,
