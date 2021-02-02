@@ -10,7 +10,7 @@ import pyNN.spiNNaker as pynn
 #print (pynn.IF_cond_exp.default_parameters)
 
 #set sim parameters
-sim_time = 50
+sim_time = 1000
 dt = 0.1
 
 #load data
