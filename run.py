@@ -24,7 +24,7 @@ pynn.setup(dt)
 network = []
 
 #cell defaults
-cell_params = {
+"""cell_params = {
 'v_thresh' : 1,
 'tau_refrac' : 0,
 'v_reset' : 0,
@@ -32,7 +32,7 @@ cell_params = {
 'cm' : 1,
 'tau_m' : 1000,
 'tau_syn_E' : 0.01,
-'tau_syn_I' : 0.01}
+'tau_syn_I' : 0.01}"""
 
 #create populations
 
