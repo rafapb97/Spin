@@ -121,7 +121,7 @@ for brain in network:
 #end simulation
 pynn.end()
 
-
+np.savez_compressed("spikes_sum.npz", spikesum)
 
 
 #generate some plots
