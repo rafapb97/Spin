@@ -16,7 +16,8 @@ dt = 0.1
 #load data
 train_data = np.load("x_test.npz")
 data = train_data['arr_0'][0]
-
+train_labels = np.load("y_test.npz")
+print("Corr is: " + str(train_labels['arr_0'][0]))
 #setup pynn
 pynn.setup(dt)
 
@@ -25,7 +26,7 @@ network = []
 
 #cell defaults
 cell_params = {
-'v_thresh' : 1,
+'v_thresh' : 0.01,
 'tau_refrac' : 0,
 'v_reset' : 0,
 'v_rest' : 0,
