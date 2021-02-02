@@ -78,8 +78,8 @@ for i in range(len(network)-1):
     inh = np.genfromtxt(filenames[i]+"_inhibitory")
     ex[:,2] /= weight_scale 
     inh[:,2] /= weight_scale 
-    pynn.Projection(network[i], network[i+1], pynn.FromListConnector(ex))
-    pynn.Projection(network[i], network[i+1], pynn.FromListConnector(inh))
+    pynn.Projection(network[i], network[i+1], pynn.FromListConnector(ex, ['weight', 'delay']), receptor_type='excitatory')
+    pynn.Projection(network[i], network[i+1], pynn.FromListConnector(inh, ['weight', 'delay']), receptor_type='inhibitory')
 
     network[i+1].initialize(v=0.0)
     #network[i+1].initialize(v=0.0, isyn_exc=0.0, isyn_inh=0.0)
