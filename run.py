@@ -5,9 +5,9 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gs
 
-import pyNN.spiNNaker as pynn
-
 #import pyNN.nest as pynn
+
+import pyNN.spiNNaker as pynn
 #print (pynn.IF_cond_exp.default_parameters)
 
 #set sim parameters
@@ -28,13 +28,14 @@ network = []
 #cell defaults
 cell_params = {
 'v_thresh' : 1,
-'tau_refrac' : 0.1,
+'tau_refrac' : 0,
 'v_reset' : 0,
 'v_rest' : 0,
 'cm' : 1,
 'tau_m' : 1000,
 'tau_syn_E' : 0.01,
-'tau_syn_I' : 0.01}
+'tau_syn_I' : 0.01
+}
 
 #create populations
 #Number of neurons: 6314
@@ -44,7 +45,7 @@ layer1 = pynn.Population(784, pynn.SpikeSourcePoisson(), label='InputLayer')
 layer1.record("spikes")
 network.append(layer1)
 
-layer2 = pynn.Population(2304, pynn.IF_curr_exp, cell_params, label='Conv1')
+layer2 = pynn.Population(2304, pynn.IF_curr_exp(**cell_params), label='Conv1')
 layer2.record("spikes")
 network.append(layer2)
 
@@ -79,8 +80,10 @@ for i in range(len(network)-1):
     inh[:,2] /= weight_scale 
     pynn.Projection(network[i], network[i+1], pynn.FromListConnector(ex))
     pynn.Projection(network[i], network[i+1], pynn.FromListConnector(inh))
-    network[i+1].initialize(v=0.0, isyn_exc=0.0, isyn_inh=0.0)
-   # 'isyn_exc': 0.0, 'isyn_inh': 0.0,
+
+    network[i+1].initialize(v=0.0)
+    #network[i+1].initialize(v=0.0, isyn_exc=0.0, isyn_inh=0.0)
+    #'isyn_exc': 0.0, 'isyn_inh': 0.0,
 #set input
 x_flat = np.ravel(data)
 
