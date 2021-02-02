@@ -15,15 +15,15 @@ config['tools'] = {
     'evaluate_ann': True,           # Test ANN on dataset before conversion.
     # Normalize weights for full dynamic range.
     'normalize': False,
-    'scale_weights_exp': True,
-    'simulate': False
+    'scale_weights_exp': False,
+    'simulate': True
 }
 
 config['simulation'] = {
     # Chooses execution backend of SNN toolbox.
     'simulator': 'spiNNaker',
-    'duration': 50,                 # Number of time steps to run each sample.
-    'num_to_test': 5,               # How many test samples to run.
+    'duration': 1000,                 # Number of time steps to run each sample.
+    'num_to_test': 1,               # How many test samples to run.
     'batch_size': 1,                # Batch size for simulation.
     # SpiNNaker seems to require 0.1 for comparable results.
     'dt': 0.1
