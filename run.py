@@ -7,7 +7,7 @@ import matplotlib.gridspec as gs
 
 #import pyNN.spiNNaker as pynn
 
-import pyNN.spiNNaker as pynn
+import pyNN.nest as pynn
 #print (pynn.IF_cond_exp.default_parameters)
 
 #set sim parameters
@@ -79,7 +79,8 @@ for i in range(len(network)-1):
     inh[:,2] /= weight_scale 
     pynn.Projection(network[i], network[i+1], pynn.FromListConnector(ex))
     pynn.Projection(network[i], network[i+1], pynn.FromListConnector(inh))
-    network[i+1].initialize(v=0)
+    network[i+1].initialize(v=0.0, isyn_exc=0.0, isyn_inh=0.0)
+   # 'isyn_exc': 0.0, 'isyn_inh': 0.0,
 #set input
 x_flat = np.ravel(data)
 
