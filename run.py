@@ -5,9 +5,9 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gs
 
-#import pyNN.nest as pynn
+import pyNN.nest as pynn
 
-import pyNN.spiNNaker as pynn
+#import pyNN.spiNNaker as pynn
 #print (pynn.IF_cond_exp.default_parameters)
 
 #set sim parameters
@@ -28,7 +28,7 @@ network = []
 #cell defaults
 cell_params = {
 'v_thresh' : 1,
-'tau_refrac' : 0,
+'tau_refrac' : 0.1,
 'v_reset' : 0,
 'v_rest' : 0,
 'cm' : 1,
@@ -99,12 +99,30 @@ network[0].set(rate=rates)
 pynn.run(sim_time)
 
 #get spikes
+shape = [10, int(sim_time/dt)]
+spiketrains = network[-1].get_data().segments[-1].spiketrains
+spiketrains_flat = np.zeros((shape[0], shape[1]))
+for k, spiketrain in enumerate(spiketrains):
+    for t in spiketrain:
+        spiketrains_flat[k, int(t / dt)] = t
+
+spiketrains_b_l_t = np.reshape(spiketrains_flat, shape)
+
+
+spikesum = np.sum(spiketrains_b_l_t, axis = 1)
+print(spikesum)
+print('estimate = ' + str(np.argmax(spikesum)))
+
+#get spikes for plotting
 spikes_brains = list()
 for brain in network:
     spikes_brains.append(brain.get_data("spikes").segments[0].spiketrains)
 
 #end simulation
 pynn.end()
+
+
+
 
 #generate some plots
 for i, spikes_brain in zip(range(len(network)), spikes_brains):
