@@ -59,8 +59,6 @@ layer5 = pynn.Population(10, pynn.IF_curr_exp, cell_params, label='Output')
 layer5.record("spikes")
 network.append(layer5)
 
-for layer in network:
-    layer.initialize(v=0)
 
 #create connections
 #pynn.Projection(input, layer1)
@@ -80,7 +78,7 @@ for i in range(len(network)-1):
     inh[:,2] /= weight_scale 
     pynn.Projection(network[i], network[i+1], pynn.FromListConnector(ex))
     pynn.Projection(network[i], network[i+1], pynn.FromListConnector(inh))
-
+    network[i+1].initialize(v=0)
 #set input
 x_flat = np.ravel(data)
 
