@@ -5,9 +5,9 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gs
 
-import pyNN.nest as pynn
+#import pyNN.nest as pynn
 
-#import pyNN.spiNNaker as pynn
+import pyNN.spiNNaker as pynn
 #print (pynn.IF_cond_exp.default_parameters)
 
 #set sim parameters
