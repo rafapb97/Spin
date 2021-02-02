@@ -8,11 +8,11 @@ filename_snn = mnist_scnn
 evaluate_ann = True
 normalize = False
 scale_weights_exp = False
-simulate = True
+simulate = False
 
 [simulation]
 simulator = spiNNaker
-duration = 1000
+duration = 50
 num_to_test = 1
 batch_size = 1
 dt = 0.1
@@ -22,6 +22,12 @@ poisson_input = True
 input_rate = 1000
 
 [cell]
+v_thresh = 0.01
+tau_refrac = 0.1
+v_reset = 0
+v_rest = 0
+cm = 1
+tau_m = 1000
 tau_syn_e = 0.01
 tau_syn_i = 0.01
 

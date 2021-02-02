@@ -26,8 +26,8 @@ network = []
 
 #cell defaults
 cell_params = {
-'v_thresh' : 1,
-'tau_refrac' : 0,
+'v_thresh' : 0.01,
+'tau_refrac' : 0.1,
 'v_reset' : 0,
 'v_rest' : 0,
 'cm' : 1,
