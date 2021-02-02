@@ -10,7 +10,7 @@ import pyNN.spiNNaker as pynn
 print (pynn.IF_cond_exp.default_parameters)
 
 #set sim parameters
-sim_time = 500
+sim_time = 1000
 dt = 0.1
 
 #load data
@@ -36,6 +36,8 @@ cell_params = {
 'tau_syn_I' : 0.01}
 
 #create populations
+#Number of neurons: 6314
+#Number of synapses: 967488
 
 layer1 = pynn.Population(784, pynn.SpikeSourcePoisson(), label='InputLayer')
 layer1.record("spikes")
@@ -74,9 +76,9 @@ for i in range(len(network)-1):
 x_flat = np.ravel(data)
 
 
-rescale_fac = 1000/(1000*0.1)
+rescale_fac = 1000/(1000*dt)
 #rescale_fac = 1000 / (self.config.getint('input', 'input_rate') *self._dt)
-rates = 1000 * x_flat #/ rescale_fac
+rates = 1000 * x_flat / rescale_fac
 print(rates)
 network[0].set(rate=rates)
 
