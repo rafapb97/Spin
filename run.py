@@ -128,7 +128,7 @@ for j in test_data:
     pynn.end()
 
     
-
+    print('simulation end')
 
     #generate some plots
     for i, spikes_brain in zip(range(len(network)), spikes_brains):
@@ -153,4 +153,6 @@ for j in test_data:
         ax_spikes.set_xlim(-1, sim_time+1)
 
         fig.savefig("spikes layer: " + str(i) + ".png")
+    print('loop end')
+print('finished correctly')
 np.save_compressed("pred_labels.npz",pred_labels)
