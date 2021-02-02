@@ -1,6 +1,6 @@
 [paths]
-path_wd = /home/matthijspals/spin
-dataset_path = /home/matthijspals/spin
+path_wd = C:\Users\rjpbe\Desktop\TUM\NISE\project\Spin
+dataset_path = C:\Users\rjpbe\Desktop\TUM\NISE\project\Spin
 filename_ann = mnist_cnn
 filename_snn = mnist_scnn
 
