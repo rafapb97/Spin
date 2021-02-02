@@ -1,4 +1,4 @@
-rom snntoolbox.bin.run import main
+from snntoolbox.bin.run import main
 import os 
 # RUN SNN TOOLBOX #
 ###################
