@@ -76,7 +76,7 @@ x_flat = np.ravel(data)
 
 rescale_fac = 1000/(1000*0.1)
 #rescale_fac = 1000 / (self.config.getint('input', 'input_rate') *self._dt)
-rates = 1000 * x_flat / rescale_fac
+rates = 1000 * x_flat #/ rescale_fac
 print(rates)
 network[0].set(rate=rates)
 
