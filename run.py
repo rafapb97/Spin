@@ -159,4 +159,4 @@ for j in test_data:
         fig.savefig("spikes layer: " + str(i) + ".png")
     print('loop end')
 print('finished correctly')
-np.save_compressed("pred_labels.npz",pred_labels)
+np.savez_compressed("pred_labels.npz",pred_labels)
