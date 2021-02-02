@@ -10,7 +10,7 @@ import pyNN.spiNNaker as pynn
 #print (pynn.IF_cond_exp.default_parameters)
 
 #set sim parameters
-sim_time = 1000
+sim_time = 50
 dt = 0.1
 
 #load data
@@ -68,9 +68,15 @@ filenames=[
     "4Dense_10"
 ]
 #FromFileConnector
+
+weight_scale = 100
 for i in range(len(network)-1):
-    pynn.Projection(network[i], network[i+1], pynn.FromFileConnector(filenames[i]+"_excitatory"))
-    pynn.Projection(network[i], network[i+1], pynn.FromFileConnector(filenames[i]+"_inhibitory"))
+    ex = np.genfromtxt(filenames[i]+"_excitatory")
+    inh = np.genfromtxt(filenames[i]+"_inhibitory")
+    ex[:,2] /= weight_scale 
+    inh[:,2] /= weight_scale 
+    pynn.Projection(network[i], network[i+1], pynn.FromListConnector(ex))
+    pynn.Projection(network[i], network[i+1], pynn.FromListConnector(inh))
 
 #set input
 x_flat = np.ravel(data)
