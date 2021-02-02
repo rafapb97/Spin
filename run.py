@@ -17,7 +17,7 @@ dt = 0.1
 train_data = np.load("x_test.npz")
 data = train_data['arr_0'][0]
 train_labels = np.load("y_test.npz")
-print("Corr is: " + str(train_labels['arr_0'][0]))
+#print("Corr is: " + str(train_labels['arr_0'][0]))
 #setup pynn
 pynn.setup(dt)
 
@@ -67,10 +67,10 @@ filenames=[
     "2Conv2D_10x10x8",
     "4Dense_10"
 ]
-
+#FromFileConnector
 for i in range(len(network)-1):
-    pynn.Projection(network[i], network[i+1], pynn.FromListConnector(np.genfromtxt(filenames[i]+"_excitatory")))
-    pynn.Projection(network[i], network[i+1], pynn.FromListConnector(np.genfromtxt(filenames[i]+"_inhibitory")))
+    pynn.Projection(network[i], network[i+1], pynn.FromFileConnector(filenames[i]+"_excitatory"))
+    pynn.Projection(network[i], network[i+1], pynn.FromFileConnector(filenames[i]+"_inhibitory"))
 
 #set input
 x_flat = np.ravel(data)
@@ -79,7 +79,7 @@ x_flat = np.ravel(data)
 rescale_fac = 1000/(1000*dt)
 #rescale_fac = 1000 / (self.config.getint('input', 'input_rate') *self._dt)
 rates = 1000 * x_flat / rescale_fac
-print(rates)
+#print(rates)
 network[0].set(rate=rates)
 
 
