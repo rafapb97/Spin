@@ -15,9 +15,9 @@ sim_time = 50
 dt = 0.1
 
 #load data
-train_data = np.load("x_test.npz")
-data = train_data['arr_0'][0]
-train_labels = np.load("y_test.npz")
+test_data = np.load("x_test.npz")[0:10]
+
+test_labels = np.load("y_test.npz")[0:10]
 #print("Corr is: " + str(train_labels['arr_0'][0]))
 #setup pynn
 pynn.setup(dt)
@@ -71,79 +71,86 @@ filenames=[
     "4Dense_10"
 ]
 #FromFileConnector
+pred_labels = []
 
-weight_scale = 1
-for i in range(len(network)-1):
-    ex = np.genfromtxt(filenames[i]+"_excitatory")
-    inh = np.genfromtxt(filenames[i]+"_inhibitory")
-    ex[:,2] /= weight_scale 
-    inh[:,2] /= weight_scale 
-    pynn.Projection(network[i], network[i+1], pynn.FromListConnector(ex, ['weight', 'delay']), receptor_type='excitatory')
-    pynn.Projection(network[i], network[i+1], pynn.FromListConnector(inh, ['weight', 'delay']), receptor_type='inhibitory')
+for j in test_data:
 
-    network[i+1].initialize(v=0.0)
-    #network[i+1].initialize(v=0.0, isyn_exc=0.0, isyn_inh=0.0)
-    #'isyn_exc': 0.0, 'isyn_inh': 0.0,
-#set input
-x_flat = np.ravel(data)
+    weight_scale = 1
+    for i in range(len(network)-1):
+        ex = np.genfromtxt(filenames[i]+"_excitatory")
+        inh = np.genfromtxt(filenames[i]+"_inhibitory")
+        ex[:,2] /= weight_scale 
+        inh[:,2] /= weight_scale 
+        pynn.Projection(network[i], network[i+1], pynn.FromListConnector(ex, ['weight', 'delay']), receptor_type='excitatory')
+        pynn.Projection(network[i], network[i+1], pynn.FromListConnector(inh, ['weight', 'delay']), receptor_type='inhibitory')
 
-
-rescale_fac = 1000/(1000*dt)
-#rescale_fac = 1000 / (self.config.getint('input', 'input_rate') *self._dt)
-rates = 1000 * x_flat / rescale_fac
-#print(rates)
-network[0].set(rate=rates)
+        network[i+1].initialize(v=0.0)
+        #network[i+1].initialize(v=0.0, isyn_exc=0.0, isyn_inh=0.0)
+        #'isyn_exc': 0.0, 'isyn_inh': 0.0,
+    #set input
+    x_flat = np.ravel(j)
 
 
-#run simulation
-pynn.run(sim_time)
-
-#get spikes
-shape = [10, int(sim_time/dt)]
-spiketrains = network[-1].get_data().segments[-1].spiketrains
-spiketrains_flat = np.zeros((shape[0], shape[1]))
-for k, spiketrain in enumerate(spiketrains):
-    for t in spiketrain:
-        spiketrains_flat[k, int(t / dt)] = t
-
-spiketrains_b_l_t = np.reshape(spiketrains_flat, shape)
+    rescale_fac = 1000/(1000*dt)
+    #rescale_fac = 1000 / (self.config.getint('input', 'input_rate') *self._dt)
+    rates = 1000 * x_flat / rescale_fac
+    #print(rates)
+    network[0].set(rate=rates)
 
 
-spikesum = np.sum(spiketrains_b_l_t, axis = 1)
-print(spikesum)
-print('estimate = ' + str(np.argmax(spikesum)))
+    #run simulation
+    pynn.run(sim_time)
 
-#get spikes for plotting
-spikes_brains = list()
-for brain in network:
-    spikes_brains.append(brain.get_data("spikes").segments[0].spiketrains)
+    #get spikes
+    shape = [10, int(sim_time/dt)]
+    spiketrains = network[-1].get_data().segments[-1].spiketrains
+    spiketrains_flat = np.zeros((shape[0], shape[1]))
+    for k, spiketrain in enumerate(spiketrains):
+        for t in spiketrain:
+            spiketrains_flat[k, int(t / dt)] = t
 
-#end simulation
-pynn.end()
-
-np.savez_compressed("spikes_sum.npz", spikesum)
+    spiketrains_b_l_t = np.reshape(spiketrains_flat, shape)
 
 
-#generate some plots
-for i, spikes_brain in zip(range(len(network)), spikes_brains):
-    fig = plt.figure(figsize=(12, 6))
-    grid = gs.GridSpec(3, 1, height_ratios=(1, 1, 4))
+    spikesum = np.sum(spiketrains_b_l_t, axis = 1)
+    
+    pred_labels.append(np.eye(10)[np.argmax(spikesum)])
+    
+    print(spikesum)
+    print('estimate = ' + str(np.argmax(spikesum)))
 
-    ax_spikes = fig.add_subplot(grid[2, 0])
+    #get spikes for plotting
+    spikes_brains = list()
+    for brain in network:
+        spikes_brains.append(brain.get_data("spikes").segments[0].spiketrains)
 
-    for (nrn, spike_train) in enumerate(spikes_brain):
-        ax_spikes.plot(
-            spike_train, np.ones_like(spike_train) * nrn, "|", c='r', ms=5)
+    #end simulation
+    pynn.end()
 
-    mn_spiketimes = [time for spikes in spikes_brain for time in spikes]
-    mn_signal, mn_times = np.histogram(
-        mn_spiketimes, bins=np.arange(0.0, sim_time, 3.0))
+    
 
-    ax_spikes.set_xlabel("time [ms] layer" + str(i) )
-    ax_spikes.set_ylabel("")
 
-    #ax_spikes.set_yticks(np.arange(0, 10, 1))
-    #ax_spikes.set_yticklabels(["", "", "MN", "", "", "", "", "~MN", "", ""])
-    ax_spikes.set_xlim(-1, sim_time+1)
+    #generate some plots
+    for i, spikes_brain in zip(range(len(network)), spikes_brains):
+        fig = plt.figure(figsize=(12, 6))
+        grid = gs.GridSpec(3, 1, height_ratios=(1, 1, 4))
 
-    fig.savefig("spikes layer: " + str(i) + ".png")
+        ax_spikes = fig.add_subplot(grid[2, 0])
+
+        for (nrn, spike_train) in enumerate(spikes_brain):
+            ax_spikes.plot(
+                spike_train, np.ones_like(spike_train) * nrn, "|", c='r', ms=5)
+
+        mn_spiketimes = [time for spikes in spikes_brain for time in spikes]
+        mn_signal, mn_times = np.histogram(
+            mn_spiketimes, bins=np.arange(0.0, sim_time, 3.0))
+
+        ax_spikes.set_xlabel("time [ms] layer" + str(i) )
+        ax_spikes.set_ylabel("")
+
+        #ax_spikes.set_yticks(np.arange(0, 10, 1))
+        #ax_spikes.set_yticklabels(["", "", "MN", "", "", "", "", "~MN", "", ""])
+        ax_spikes.set_xlim(-1, sim_time+1)
+
+        fig.savefig("spikes layer: " + str(i) + ".png")
+np.save_compressed("pred_labels.npz",pred_labels)
