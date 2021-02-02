@@ -5,7 +5,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gs
 
-import pyNN.spiNNaker as pynn
+import pyNN.nest as pynn
 
 #print (pynn.IF_cond_exp.default_parameters)
 
@@ -20,7 +20,7 @@ train_labels = np.load("y_test.npz")
 #print("Corr is: " + str(train_labels['arr_0'][0]))
 #setup pynn
 pynn.setup(dt)
-pynn.set_number_of_neurons_per_core(pynn.IF_curr_exp, 64)
+#pynn.set_number_of_neurons_per_core(pynn.IF_curr_exp, 64)
 #create network
 network = []
 
@@ -59,6 +59,9 @@ layer5 = pynn.Population(10, pynn.IF_curr_exp, cell_params, label='Output')
 layer5.record("spikes")
 network.append(layer5)
 
+for layer in network:
+    layer.initialize(v=0)
+
 #create connections
 #pynn.Projection(input, layer1)
 filenames=[
@@ -69,7 +72,7 @@ filenames=[
 ]
 #FromFileConnector
 
-weight_scale = 100
+weight_scale = 1
 for i in range(len(network)-1):
     ex = np.genfromtxt(filenames[i]+"_excitatory")
     inh = np.genfromtxt(filenames[i]+"_inhibitory")
