@@ -56,12 +56,12 @@ np.savez_compressed(os.path.join(path_wd, 'x_norm'), x_train[::10])
 input_shape = x_train.shape[1:]
 input_layer = Input(input_shape)
 
-layer = Conv2D(filters=4,
-               kernel_size=(3, 3),
+layer = Conv2D(filters=16,
+               kernel_size=(5, 5),
                strides=(2, 2),
                activation='relu',
                use_bias=False)(input_layer)
-"""
+
 layer = Conv2D(filters=32,
                kernel_size=(3, 3),
                activation='relu',
@@ -72,7 +72,7 @@ layer = Conv2D(filters=8,
                padding='same',
                activation='relu',
                use_bias=False)(layer)
-"""
+
 layer = Flatten()(layer)
 layer = Dropout(0.01)(layer)
 
