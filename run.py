@@ -10,7 +10,7 @@ import pyNN.spiNNaker as pynn
 print (pynn.IF_cond_exp.default_parameters)
 
 #set sim parameters
-sim_time = 200
+sim_time = 500
 dt = 0.1
 
 #load data
@@ -41,11 +41,11 @@ layer1.record("spikes")
 network.append(layer1)
 
 
-layer2 = pynn.Population(676, pynn.IF_curr_exp)
+layer2 = pynn.Population(676, pynn.IF_curr_exp())
 layer2.record("spikes")
 network.append(layer2)
 
-layer3 = pynn.Population(10, pynn.IF_curr_exp)
+layer3 = pynn.Population(10, pynn.IF_curr_exp())
 layer3.record("spikes")
 network.append(layer3)
 
