@@ -10,7 +10,7 @@ import pyNN.spiNNaker as pynn
 print (pynn.IF_cond_exp.default_parameters)
 
 #set sim parameters
-sim_time = 200
+sim_time = 50
 dt = 0.1
 
 #load data
@@ -40,23 +40,34 @@ layer1 = pynn.Population(784, pynn.SpikeSourcePoisson(), label='InputLayer')
 layer1.record("spikes")
 network.append(layer1)
 
-
-layer2 = pynn.Population(676, pynn.IF_curr_exp, cell_params)
+layer2 = pynn.Population(2304, pynn.IF_curr_exp, cell_params, label='Conv1')
 layer2.record("spikes")
 network.append(layer2)
 
-layer3 = pynn.Population(10, pynn.IF_curr_exp, cell_params)
+layer3 = pynn.Population(3200, pynn.IF_curr_exp, cell_params, label='Conv2')
 layer3.record("spikes")
 network.append(layer3)
 
+layer4 = pynn.Population(800, pynn.IF_curr_exp, cell_params, label='Conv3')
+layer4.record("spikes")
+network.append(layer4)
+
+layer5 = pynn.Population(10, pynn.IF_curr_exp, cell_params, label='Output')
+layer5.record("spikes")
+network.append(layer5)
+
 #create connections
 #pynn.Projection(input, layer1)
+filenames=[
+    "0Conv2D_12x12x16",
+    "1Conv2D_10x10x32",
+    "2Conv2D_10x10x8",
+    "4Dense_10"
+]
 
-pynn.Projection(layer1, layer2, pynn.FromListConnector(np.genfromtxt("0Conv2D_13x13x4_excitatory")))
-pynn.Projection(layer1, layer2, pynn.FromListConnector(np.genfromtxt("0Conv2D_13x13x4_inhibitory")))
-
-pynn.Projection(layer2, layer3, pynn.FromListConnector(np.genfromtxt("2Dense_10_excitatory")))
-pynn.Projection(layer2, layer3, pynn.FromListConnector(np.genfromtxt("2Dense_10_inhibitory")))
+for i in range(len(network)-1):
+    pynn.Projection(network[i], network[i+1], pynn.FromListConnector(np.genfromtxt(filenames[i]+"_excitatory")))
+    pynn.Projection(network[i], network[i+1], pynn.FromListConnector(np.genfromtxt(filenames[i]+"_inhibitory")))
 
 #set input
 x_flat = np.ravel(data)
