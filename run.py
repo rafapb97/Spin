@@ -19,61 +19,65 @@ test_data = np.load("x_test.npz")['arr_0'][0:10]
 
 test_labels = np.load("y_test.npz")['arr_0'][0:10]
 #print("Corr is: " + str(train_labels['arr_0'][0]))
-#setup pynn
-pynn.setup(dt)
-#pynn.set_number_of_neurons_per_core(pynn.IF_curr_exp, 64)
-#create network
-network = []
 
-#cell defaults
-cell_params = {
-'v_thresh' : 1,
-'tau_refrac' : 0.1,
-'v_reset' : 0,
-'v_rest' : 0,
-'cm' : 1,
-'tau_m' : 1000,
-'tau_syn_E' : 0.01,
-'tau_syn_I' : 0.01
-}
-
-#create populations
-#Number of neurons: 6314
-#Number of synapses: 967488
-
-layer1 = pynn.Population(784, pynn.SpikeSourcePoisson(), label='InputLayer')
-layer1.record("spikes")
-network.append(layer1)
-
-layer2 = pynn.Population(2304, pynn.IF_curr_exp(**cell_params), label='Conv1')
-layer2.record("spikes")
-network.append(layer2)
-
-layer3 = pynn.Population(3200, pynn.IF_curr_exp, cell_params, label='Conv2')
-layer3.record("spikes")
-network.append(layer3)
-
-layer4 = pynn.Population(800, pynn.IF_curr_exp, cell_params, label='Conv3')
-layer4.record("spikes")
-network.append(layer4)
-
-layer5 = pynn.Population(10, pynn.IF_curr_exp, cell_params, label='Output')
-layer5.record("spikes")
-network.append(layer5)
-
-
-#create connections
-#pynn.Projection(input, layer1)
-filenames=[
-    "0Conv2D_12x12x16",
-    "1Conv2D_10x10x32",
-    "2Conv2D_10x10x8",
-    "4Dense_10"
-]
-#FromFileConnector
 pred_labels = []
 
 for j in test_data:
+    #setup pynn
+    pynn.setup(dt)
+    #pynn.set_number_of_neurons_per_core(pynn.IF_curr_exp, 64)
+    #create network
+    network = []
+
+    #cell defaults
+    cell_params = {
+    'v_thresh' : 1,
+    'tau_refrac' : 0.1,
+    'v_reset' : 0,
+    'v_rest' : 0,
+    'cm' : 1,
+    'tau_m' : 1000,
+    'tau_syn_E' : 0.01,
+    'tau_syn_I' : 0.01
+    }
+
+    #create populations
+    #Number of neurons: 6314
+    #Number of synapses: 967488
+
+    layer1 = pynn.Population(784, pynn.SpikeSourcePoisson(), label='InputLayer')
+    layer1.record("spikes")
+    network.append(layer1)
+
+    layer2 = pynn.Population(2304, pynn.IF_curr_exp(**cell_params), label='Conv1')
+    layer2.record("spikes")
+    network.append(layer2)
+
+    layer3 = pynn.Population(3200, pynn.IF_curr_exp, cell_params, label='Conv2')
+    layer3.record("spikes")
+    network.append(layer3)
+
+    layer4 = pynn.Population(800, pynn.IF_curr_exp, cell_params, label='Conv3')
+    layer4.record("spikes")
+    network.append(layer4)
+
+    layer5 = pynn.Population(10, pynn.IF_curr_exp, cell_params, label='Output')
+    layer5.record("spikes")
+    network.append(layer5)
+
+
+    #create connections
+    #pynn.Projection(input, layer1)
+    filenames=[
+        "0Conv2D_12x12x16",
+        "1Conv2D_10x10x32",
+        "2Conv2D_10x10x8",
+        "4Dense_10"
+    ]
+    #FromFileConnector
+
+
+
 
     weight_scale = 1
     for i in range(len(network)-1):
