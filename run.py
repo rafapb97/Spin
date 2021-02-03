@@ -167,7 +167,7 @@ good_preds=0
 bad_preds=0
 
 for i in range(len(pred_labels)):
-    if (pred_labels[i] == test_labels[i]):
+    if (pred_labels[i].all() == test_labels[i].all()):
         good_preds = good_preds+1
     else:
         bad_preds=bad_preds+1
