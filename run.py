@@ -22,6 +22,7 @@ print("Corr is: " + str(train_labels['arr_0'][0]))
 
 #setup pynn
 pynn.setup(dt)
+pynn.set_number_of_neurons_per_core(pynn.IF_curr_exp, 64)
 
 #create network
 network = []
