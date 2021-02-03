@@ -15,7 +15,7 @@ dt = 0.1
 
 #load data
 train_data = np.load("x_test.npz")
-data = train_data['arr_0'][0]
+data = train_data['arr_0'][1]
 train_labels = np.load("y_test.npz")
 print("Corr is: " + str(train_labels['arr_0'][0]))
 
@@ -48,19 +48,19 @@ cell_params = {
 #create populations
 
 layer1 = pynn.Population(13068, pynn.SpikeSourcePoisson(), label='InputLayer')
-layer1.record("spikes")
+#layer1.record("spikes")
 network.append(layer1)
 
 layer2 = pynn.Population(15376, pynn.IF_curr_exp, cell_params, label='Conv1')
-layer2.record("spikes")
+#layer2.record("spikes")
 network.append(layer2)
 
 layer3 = pynn.Population(26912, pynn.IF_curr_exp, cell_params, label='Conv2')
-layer3.record("spikes")
+#layer3.record("spikes")
 network.append(layer3)
 
 layer4 = pynn.Population(6728, pynn.IF_curr_exp, cell_params, label='Conv3')
-layer4.record("spikes")
+#layer4.record("spikes")
 network.append(layer4)
 
 layer5 = pynn.Population(5, pynn.IF_curr_exp, cell_params, label='Output')
@@ -87,7 +87,7 @@ x_flat = np.ravel(data)
 rescale_fac = 1000/(1000*0.1)
 #rescale_fac = 1000 / (self.config.getint('input', 'input_rate') *self._dt)
 rates = 1000 * x_flat #/ rescale_fac
-print(rates)
+#print(rates)
 network[0].set(rate=rates)
 
 
