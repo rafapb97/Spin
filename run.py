@@ -42,7 +42,7 @@ cell_params = {
 layer1 = pynn.Population(13068, pynn.SpikeSourcePoisson(), label='InputLayer')
 #layer1.record("spikes")
 network.append(layer1)
-"""
+
 layer2 = pynn.Population(15376, pynn.IF_curr_exp, cell_params, label='Conv1')
 #layer2.record("spikes")
 network.append(layer2)
@@ -54,7 +54,7 @@ network.append(layer3)
 layer4 = pynn.Population(6728, pynn.IF_curr_exp, cell_params, label='Conv3')
 #layer4.record("spikes")
 network.append(layer4)
-"""
+
 layer5 = pynn.Population(5, pynn.IF_curr_exp, cell_params, label='Output')
 layer5.record("spikes")
 network.append(layer5)
