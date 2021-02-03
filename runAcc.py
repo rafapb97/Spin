@@ -97,7 +97,7 @@ for j in test_data:
     pynn.run(sim_time)
 
     #get spikes
-    shape = [10, int(sim_time/dt)]
+    shape = [5, int(sim_time/dt)]
     spiketrains = network[-1].get_data().segments[-1].spiketrains
     spiketrains_flat = np.zeros((shape[0], shape[1]))
     for k, spiketrain in enumerate(spiketrains):
@@ -108,7 +108,7 @@ for j in test_data:
 
     spikesum = np.sum(spiketrains_b_l_t, axis = 1)
 
-    pred_labels.append(np.eye(10)[np.argmax(spikesum)])
+    pred_labels.append(np.eye(5)[np.argmax(spikesum)])
 
     print(spikesum)
     print('estimate = ' + str(np.argmax(spikesum)))
