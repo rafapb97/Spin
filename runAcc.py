@@ -13,7 +13,7 @@ import pyNN.spiNNaker as pynn
 #set sim parameters
 sim_time = 50
 dt = 0.1
-num_test=3
+num_test=10
 
 #load data
 test_data = np.load("x_test.npz")['arr_0'][:num_test]
@@ -33,7 +33,7 @@ network = []
 #cell defaults
 cell_params = {
 'v_thresh' : 1,
-'tau_refrac' : 0,
+'tau_refrac' : 0.1,
 'v_reset' : 0,
 'v_rest' : 0,
 'cm' : 1,
@@ -75,21 +75,23 @@ filenames=[
 #FromFileConnector
 
 
-weight_scale = 1
+#weight_scale = 1
 for i in range(len(network)-1):
     ex = np.genfromtxt(filenames[i]+"_excitatory")
     inh = np.genfromtxt(filenames[i]+"_inhibitory")
-    ex[:,2] /= weight_scale 
-    inh[:,2] /= weight_scale 
+   # ex[:,2] /= weight_scale 
+    #inh[:,2] /= weight_scale 
     pynn.Projection(network[i], network[i+1], pynn.FromListConnector(ex, ['weight', 'delay']), receptor_type='excitatory')
     pynn.Projection(network[i], network[i+1], pynn.FromListConnector(inh, ['weight', 'delay']), receptor_type='inhibitory')
 
-    network[i+1].initialize(v=0.0)
+
     #network[i+1].initialize(v=0.0, isyn_exc=0.0, isyn_inh=0.0)
     #'isyn_exc': 0.0, 'isyn_inh': 0.0,
 #set input
 rescale_fac = 1000/(1000*dt)
 for j in test_data:
+    for i in range(len(network)-1):
+        network[i+1].initialize(v=0.0)
     x_flat = np.ravel(j)
     rates = 1000 * x_flat / rescale_fac
     network[0].set(rate=rates)
