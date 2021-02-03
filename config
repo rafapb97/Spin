@@ -31,3 +31,9 @@ tau_m = 1000
 tau_syn_e = 0.01
 tau_syn_i = 0.01
 
+[EnergySavings]
+turn_off_board_after_discovery = True
+
+[Reports]
+reports_enabled = True
+write_energy_report = True

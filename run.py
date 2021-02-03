@@ -15,9 +15,9 @@ sim_time = 50
 dt = 0.1
 
 #load data
-test_data = np.load("x_test.npz")['arr_0'][0:10]
+test_data = np.load("x_test.npz")['arr_0'][0:2]
 
-test_labels = np.load("y_test.npz")['arr_0'][0:10]
+test_labels = np.load("y_test.npz")['arr_0'][0:2]
 #print("Corr is: " + str(train_labels['arr_0'][0]))
 
 
