@@ -4,8 +4,8 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gs
-import pyNN.nest as pynn
-#import pyNN.spiNNaker as pynn
+#import pyNN.nest as pynn
+import pyNN.spiNNaker as pynn
 
 print (pynn.IF_cond_exp.default_parameters)
 
@@ -37,7 +37,7 @@ network = []
 #cell defaults
 cell_params = {
 'v_thresh' : 0.01,
-'tau_refrac' : 0.1,
+'tau_refrac' : 0,
 'v_reset' : 0,
 'v_rest' : 0,
 'cm' : 1,
