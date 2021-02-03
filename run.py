@@ -19,6 +19,8 @@ test_data = np.load("x_test.npz")['arr_0'][0:10]
 
 test_labels = np.load("y_test.npz")['arr_0'][0:10]
 #print("Corr is: " + str(train_labels['arr_0'][0]))
+file1 = open("myfile.txt","a")#append mode 
+
 
 pred_labels = []
 
@@ -118,7 +120,7 @@ for j in test_data:
 
     spikesum = np.sum(spiketrains_b_l_t, axis = 1)
     
-    pred_labels.append(np.eye(10)[np.argmax(spikesum)])
+    file1.write(str(np.eye(10)[np.argmax(spikesum)]))
     
     print(spikesum)
     print('estimate = ' + str(np.argmax(spikesum)))
@@ -157,6 +159,7 @@ for j in test_data:
         ax_spikes.set_xlim(-1, sim_time+1)
 
         fig.savefig("spikes layer: " + str(i) + ".png")
+        
     print('loop end')
-print('finished correctly')
-np.savez_compressed("pred_labels.npz",pred_labels)
+
+file1.close() 
