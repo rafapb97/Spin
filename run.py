@@ -20,14 +20,6 @@ train_labels = np.load("y_test.npz")
 print("Corr is: " + str(train_labels['arr_0'][0]))
 
 
-
-def plot_spiketrains(segment):
-    for spiketrain in segment.spiketrains:
-        y = np.ones_like(spiketrain) * spiketrain.annotations['source_id']
-    
-        plt.plot(spiketrain, y, '.')
-        plt.ylabel(segment.name)
-        plt.setp(plt.gca().get_xticklabels(), visible=False)
 #setup pynn
 pynn.setup(dt)
 
@@ -36,7 +28,7 @@ network = []
 
 #cell defaults
 cell_params = {
-'v_thresh' : 0.01,
+'v_thresh' : 1,
 'tau_refrac' : 0,
 'v_reset' : 0,
 'v_rest' : 0,
@@ -76,17 +68,23 @@ filenames=[
     "4Dense_5"
 ]
 
+weight_scale = 1
 for i in range(len(network)-1):
-    pynn.Projection(network[i], network[i+1], pynn.FromListConnector(np.genfromtxt(filenames[i]+"_excitatory")))
-    pynn.Projection(network[i], network[i+1], pynn.FromListConnector(np.genfromtxt(filenames[i]+"_inhibitory")))
+	ex = np.genfromtxt(filenames[i]+"_excitatory")
+	inh = np.genfromtxt(filenames[i]+"_inhibitory")
+	ex[:,2] /= weight_scale 
+	inh[:,2] /= weight_scale 
+	pynn.Projection(network[i], network[i+1], pynn.FromListConnector(ex, ['weight', 'delay']), receptor_type='excitatory')
+	pynn.Projection(network[i], network[i+1], pynn.FromListConnector(inh, ['weight', 'delay']), receptor_type='inhibitory')
 
+        network[i+1].initialize(v=0.0)
 #set input
 x_flat = np.ravel(data)
 
 
-rescale_fac = 1000/(1000*0.1)
+rescale_fac = 1000/(1000*dt)
 #rescale_fac = 1000 / (self.config.getint('input', 'input_rate') *self._dt)
-rates = 1000 * x_flat #/ rescale_fac
+rates = 1000 * x_flat / rescale_fac
 #print(rates)
 network[0].set(rate=rates)
 
@@ -110,7 +108,7 @@ plot_spiketrains(segments[4])
 fig.savefig("segment4.png")
 
 #generate some plots
-for i, spikes_brain in zip(range(len(network)), spikes_brains):
+for i, spikes_brain in enumerate(spikes_brains):
     fig = plt.figure(figsize=(12, 6))
     grid = gs.GridSpec(3, 1, height_ratios=(1, 1, 4))
 
