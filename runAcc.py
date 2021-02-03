@@ -107,7 +107,7 @@ for k, spiketrain in enumerate(spiketrains):
 spiketrains_b_l_t = np.reshape(spiketrains_flat, shape)
 
 for i in range(num_test):
-    spikesum = np.sum(spiketrains_b_l_t[:,i*50:(i+1)*50,:], axis = 1)
+    spikesum = np.sum(spiketrains_b_l_t[:,int(sim_time*i/dt):int(sim_time*(i+1)/dt)], axis = 1)
 
     pred_labels.append(np.eye(10)[np.argmax(spikesum)])
 
