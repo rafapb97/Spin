@@ -1,8 +1,8 @@
 [paths]
 path_wd = /home/matthijspals/spin
 dataset_path = /home/matthijspals/spin
-filename_ann = mnist_cnn
-filename_snn = mnist_scnn
+filename_ann = CNN1
+filename_snn = sCNN1
 
 [tools]
 evaluate_ann = True
@@ -31,9 +31,3 @@ tau_m = 1000
 tau_syn_e = 0.01
 tau_syn_i = 0.01
 
-[EnergySavings]
-turn_off_board_after_discovery = True
-
-[Reports]
-reports_enabled = True
-write_energy_report = True

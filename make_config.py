@@ -7,8 +7,8 @@ path = os.path.abspath((os.path.dirname(os.path.realpath(__file__))))
 config['paths'] = {
     'path_wd': path,             # Path to model.
     'dataset_path': path,        # Path to dataset.
-    'filename_ann': "mnist_cnn",     # Name of input model.
-    'filename_snn': "mnist_scnn"
+    'filename_ann': "CNN1",     # Name of input model.
+    'filename_snn': "sCNN1"
 }
 
 config['tools'] = {
