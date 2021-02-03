@@ -19,7 +19,7 @@ test_data = np.load("x_test.npz")['arr_0'][0:10]
 
 test_labels = np.load("y_test.npz")['arr_0'][0:10]
 #print("Corr is: " + str(train_labels['arr_0'][0]))
-file1 = open("myfile.txt","a")#append mode 
+
 
 
 pred_labels = []
@@ -120,7 +120,7 @@ for j in test_data:
 
     spikesum = np.sum(spiketrains_b_l_t, axis = 1)
     
-    file1.write(str(np.eye(10)[np.argmax(spikesum)]))
+    pred_labels.append(np.eye(10)[np.argmax(spikesum)])
     
     print(spikesum)
     print('estimate = ' + str(np.argmax(spikesum)))
@@ -162,4 +162,15 @@ for j in test_data:
         
     print('loop end')
 
-file1.close() 
+
+good_preds=0
+bad_preds=0
+
+for i in range(len(pred_labels)):
+    if (pred_labels[i] == test_labels[i]):
+        good_preds = good_preds+1
+    else:
+        bad_preds=bad_preds+1
+print("accuracy: "+str(good_preds/(good_preds+bad_preds)))
+        
+        
