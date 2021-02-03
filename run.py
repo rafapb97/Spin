@@ -40,19 +40,19 @@ cell_params = {
 
 #create populations
 
-layer1 = pynn.Population(13068, pynn.SpikeSourcePoisson(), label='InputLayer')
+layer1 = pynn.Population(12288, pynn.SpikeSourcePoisson(), label='InputLayer')
 #layer1.record("spikes")
 network.append(layer1)
 
-layer2 = pynn.Population(15376, pynn.IF_curr_exp, cell_params, label='Conv1')
+layer2 = pynn.Population(14400, pynn.IF_curr_exp, cell_params, label='Conv1')
 #layer2.record("spikes")
 network.append(layer2)
 
-layer3 = pynn.Population(26912, pynn.IF_curr_exp, cell_params, label='Conv2')
+layer3 = pynn.Population(25088, pynn.IF_curr_exp, cell_params, label='Conv2')
 #layer3.record("spikes")
 network.append(layer3)
 
-layer4 = pynn.Population(6728, pynn.IF_curr_exp, cell_params, label='Conv3')
+layer4 = pynn.Population(6272, pynn.IF_curr_exp, cell_params, label='Conv3')
 #layer4.record("spikes")
 network.append(layer4)
 
@@ -63,9 +63,9 @@ network.append(layer5)
 #create connections
 #pynn.Projection(input, layer1)
 filenames=[
-    "0Conv2D_31x31x16",
-    "1Conv2D_29x29x32",
-    "2Conv2D_29x29x8",
+    "0Conv2D_30x30x16",
+    "1Conv2D_28x28x32",
+    "2Conv2D_28x28x8",
     "4Dense_5"
 ]
 
