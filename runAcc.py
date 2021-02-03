@@ -13,7 +13,7 @@ import pyNN.spiNNaker as pynn
 #set sim parameters
 sim_time = 50
 dt = 0.1
-num_test=21
+num_test=3
 
 #load data
 test_data = np.load("x_test.npz")['arr_0'][:num_test]
@@ -96,23 +96,24 @@ for j in test_data:
     #run simulation
     pynn.run(sim_time)
 
-#get spikes
-shape = [10, int(sim_time*num_test/dt)]
-spiketrains = network[-1].get_data().segments[-1].spiketrains
-spiketrains_flat = np.zeros((shape[0], shape[1]))
-for k, spiketrain in enumerate(spiketrains):
-    for t in spiketrain:
-        spiketrains_flat[k, int(t / dt)] = t
+    #get spikes
+    shape = [10, int(sim_time/dt)]
+    spiketrains = network[-1].get_data().segments[-1].spiketrains
+    spiketrains_flat = np.zeros((shape[0], shape[1]))
+    for k, spiketrain in enumerate(spiketrains):
+        for t in spiketrain:
+            spiketrains_flat[k, int(t / dt)] = t
 
-spiketrains_b_l_t = np.reshape(spiketrains_flat, shape)
+    spiketrains_b_l_t = np.reshape(spiketrains_flat, shape)
 
-for i in range(num_test):
-    spikesum = np.sum(spiketrains_b_l_t[:,int(sim_time*i/dt):int(sim_time*(i+1)/dt)], axis = 1)
+    spikesum = np.sum(spiketrains_b_l_t, axis = 1)
 
     pred_labels.append(np.eye(10)[np.argmax(spikesum)])
 
     print(spikesum)
     print('estimate = ' + str(np.argmax(spikesum)))
+
+    pynn.reset()
 """
 #get spikes for plotting
 spikes_brains = list()
