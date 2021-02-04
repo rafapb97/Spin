@@ -13,7 +13,7 @@ import pyNN.spiNNaker as pynn
 #set sim parameters
 sim_time = 50
 dt = 0.1
-num_test=10
+num_test=2
 
 #load data
 test_data = np.load("x_test.npz")['arr_0'][:num_test]
@@ -150,15 +150,7 @@ for spiketrain in spiketrains_all:
 print('loop end')
 
 
-good_preds=0
-bad_preds=0
-
+good_preds=0.0
 for i in range(len(pred_labels)):
-    print(pred_labels[i])
-    print(test_labels[i])
-    print(np.dot(pred_labels[i], test_labels[i]))
-    if (np.dot(pred_labels[i], test_labels[i])>0):
-        good_preds +=1
-    else:
-        bad_preds +=1
-print("accuracy: "+str(good_preds/(good_preds+bad_preds)))
+    good_preds +=np.dot(pred_labels[i], test_labels[i])
+print("accuracy: "+str(good_preds/i))
