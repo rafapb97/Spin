@@ -4,7 +4,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gs
-
+import os
 #import pyNN.nest as pynn
 
 import pyNN.spiNNaker as pynn
@@ -13,7 +13,7 @@ import pyNN.spiNNaker as pynn
 #set sim parameters
 sim_time = 50
 dt = 0.1
-num_test=21
+num_test=2
 
 #load data
 test_data = np.load("x_test.npz")['arr_0'][:num_test]
@@ -63,6 +63,7 @@ layer5 = pynn.Population(5, pynn.IF_curr_exp, cell_params, label='Output')
 layer5.record("spikes")
 network.append(layer5)
 
+spiketrains_all=[]
 
 #create connections
 #pynn.Projection(input, layer1)
@@ -107,14 +108,14 @@ for j in test_data:
             spiketrains_flat[k, int(t / dt)] = t
 
     spiketrains_b_l_t = np.reshape(spiketrains_flat, shape)
-
+    spiketrains_all.append(spiketrains_b_l_t)
     spikesum = np.sum(spiketrains_b_l_t, axis = 1)
 
     pred_labels.append(np.eye(5)[np.argmax(spikesum)])
 
     print(spikesum)
     print('estimate = ' + str(np.argmax(spikesum)))
-
+   
     pynn.reset()
 """
 #get spikes for plotting
@@ -127,31 +128,17 @@ pynn.end()
 
 
 print('simulation end')
-"""
-#generate some plots
-for i, spikes_brain in zip(range(len(network)), spikes_brains):
-    fig = plt.figure(figsize=(12, 6))
-    grid = gs.GridSpec(3, 1, height_ratios=(1, 1, 4))
 
-    ax_spikes = fig.add_subplot(grid[2, 0])
+s = []
+a = []
+for spiketrain in spiketrains_all:
+    eventdata = []
+    for dat in spiketrain:
+        eventdata.append(np.nonzero(dat)[0])
+    plt.figure()
+    plt.eventplot(eventdata)
+    #fig.savefig("spikes layer: " + str(i) + ".png")
 
-    for (nrn, spike_train) in enumerate(spikes_brain):
-        ax_spikes.plot(
-            spike_train, np.ones_like(spike_train) * nrn, "|", c='r', ms=5)
-
-    mn_spiketimes = [time for spikes in spikes_brain for time in spikes]
-    mn_signal, mn_times = np.histogram(
-        mn_spiketimes, bins=np.arange(0.0, sim_time, 3.0))
-
-    ax_spikes.set_xlabel("time [ms] layer" + str(i) )
-    ax_spikes.set_ylabel("")
-
-    #ax_spikes.set_yticks(np.arange(0, 10, 1))
-    #ax_spikes.set_yticklabels(["", "", "MN", "", "", "", "", "~MN", "", ""])
-    ax_spikes.set_xlim(-1, sim_time+1)
-
-    fig.savefig("spikes layer: " + str(i) + ".png")
-"""  
 print('loop end')
 
 
@@ -159,10 +146,9 @@ good_preds=0
 bad_preds=0
 
 for i in range(len(pred_labels)):
+    
     if (np.dot(pred_labels[i], test_labels[i])==1):
         good_preds +=1
     else:
         bad_preds +=1
 print("accuracy: "+str(good_preds/(good_preds+bad_preds)))
-        
-        
