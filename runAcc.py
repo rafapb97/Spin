@@ -13,7 +13,7 @@ import pyNN.spiNNaker as pynn
 #set sim parameters
 sim_time = 50
 dt = 0.1
-num_test=2
+num_test=21
 
 #load data
 test_data = np.load("x_test.npz")['arr_0'][:num_test]
@@ -131,13 +131,15 @@ print('simulation end')
 
 s = []
 a = []
+i = 0
 for spiketrain in spiketrains_all:
     eventdata = []
     for dat in spiketrain:
         eventdata.append(np.nonzero(dat)[0])
     plt.figure()
     plt.eventplot(eventdata)
-    #fig.savefig("spikes layer: " + str(i) + ".png")
+    plt.savefig("spikes trial: " + str(i) + ".png")
+    i+=1
 
 print('loop end')
 
@@ -146,8 +148,10 @@ good_preds=0
 bad_preds=0
 
 for i in range(len(pred_labels)):
-    
-    if (np.dot(pred_labels[i], test_labels[i])==1):
+    print(pred_labels[i])
+    print(test_labels[i])
+    print(np.dot(pred_labels[i], test_labels[i]))
+    if (np.dot(pred_labels[i], test_labels[i])):
         good_preds +=1
     else:
         bad_preds +=1
