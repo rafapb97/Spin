@@ -155,4 +155,4 @@ print('loop end')
 good_preds=0.0
 for i in range(len(pred_labels)):
     good_preds +=np.dot(pred_labels[i], test_labels[i])
-print("accuracy: "+str(good_preds/(i+1))
+print("accuracy: "+str(good_preds/(i+1)))
