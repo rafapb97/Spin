@@ -14,7 +14,7 @@ import pyNN.spiNNaker as pynn
 sim_time = 150
 dt = 0.1
 refrac = 0
-num_test=5
+num_test=15
 pynn.setup(dt)
 pynn.set_number_of_neurons_per_core(pynn.IF_curr_exp, 64)
 weight_scale = 1
