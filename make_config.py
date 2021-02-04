@@ -7,14 +7,14 @@ path = os.path.abspath((os.path.dirname(os.path.realpath(__file__))))
 config['paths'] = {
     'path_wd': path,             # Path to model.
     'dataset_path': path,        # Path to dataset.
-    'filename_ann': "CNN1",     # Name of input model.
+    'filename_ann': "CNN2",     # Name of input model.
     'filename_snn': "sCNN1"
 }
 
 config['tools'] = {
     'evaluate_ann': True,           # Test ANN on dataset before conversion.
     # Normalize weights for full dynamic range.
-    'normalize': True,
+    'normalize': False,
     'scale_weights_exp': True,
     'simulate': False
 }
@@ -37,8 +37,8 @@ config['input'] = {
 }
 
 config['cell'] = {
-    'v_thresh' : 1,
-    'tau_refrac' : 0,
+    'v_thresh' : 0.01,
+    'tau_refrac' : 0.1,
     'v_reset' : 0,
     'v_rest' : 0,
     'cm' : 1,

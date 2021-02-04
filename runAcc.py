@@ -31,8 +31,8 @@ network = []
 
 #cell defaults
 cell_params = {
-'v_thresh' : 1,
-'tau_refrac' : 0,
+'v_thresh' : 0.01,
+'tau_refrac' : 0.1,
 'v_reset' : 0,
 'v_rest' : 0,
 'cm' : 1,
@@ -155,4 +155,4 @@ print('loop end')
 good_preds=0.0
 for i in range(len(pred_labels)):
     good_preds +=np.dot(pred_labels[i], test_labels[i])
-print("accuracy: "+str(good_preds/i))
+print("accuracy: "+str(good_preds/(i+1))
