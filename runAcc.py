@@ -13,13 +13,13 @@ import pyNN.spiNNaker as pynn
 #set sim parameters
 sim_time = 50
 dt = 0.1
-num_test=10
+num_test=21
 
 #load data
 test_data = np.load("x_test.npz")['arr_0'][:num_test]
 test_labels = np.load("y_test.npz")['arr_0'][:num_test]
 #print("Corr is: " + str(train_labels['arr_0'][0]))
-#print(test_labels)
+print(test_labels)
 pynn.setup(dt)
 pynn.set_number_of_neurons_per_core(pynn.IF_curr_exp, 64)
 
@@ -159,10 +159,10 @@ good_preds=0
 bad_preds=0
 
 for i in range(len(pred_labels)):
-    if (pred_labels[i].all() == test_labels[i].all()):
-        good_preds = good_preds+1
+    if (np.dot(pred_labels[i], test_labels[i])==1):
+        good_preds +=1
     else:
-        bad_preds=bad_preds+1
+        bad_preds +=1
 print("accuracy: "+str(good_preds/(good_preds+bad_preds)))
         
         
