@@ -100,16 +100,15 @@ for j in test_data:
     pynn.run(sim_time)
 
     #get spikes
-    shape = [5, int(sim_time/dt)]
+    shape = (5, int(sim_time/dt))
     spiketrains = network[-1].get_data().segments[-1].spiketrains
-    spiketrains_flat = np.zeros((shape[0], shape[1]))
+    spiketrains_flat = np.zeros(shape)
     for k, spiketrain in enumerate(spiketrains):
         for t in spiketrain:
-            spiketrains_flat[k, int(t / dt)] = t
+            spiketrains_flat[k, int(t / dt)] = 1
 
-    spiketrains_b_l_t = np.reshape(spiketrains_flat, shape)
-    spiketrains_all.append(spiketrains_b_l_t)
-    spikesum = np.sum(spiketrains_b_l_t, axis = 1)
+    spiketrains_all.append(spiketrains_flat)
+    spikesum = np.sum(spiketrains_flat, axis = 1)
 
     pred_labels.append(np.eye(5)[np.argmax(spikesum)])
 
