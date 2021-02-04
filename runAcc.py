@@ -13,7 +13,7 @@ import pyNN.spiNNaker as pynn
 #set sim parameters
 sim_time = 50
 dt = 0.1
-num_test=21
+num_test=2
 
 #load data
 test_data = np.load("x_test.npz")['arr_0'][:num_test]
@@ -90,7 +90,13 @@ for i in range(len(network)-1):
     #'isyn_exc': 0.0, 'isyn_inh': 0.0,
 #set input
 rescale_fac = 1000/(1000*dt)
+firstrun = True
 for j in test_data:
+    if firstrun:
+        firstrun = False
+    else:
+        pynn.reset()
+
     for i in range(len(network)-1):
         network[i+1].initialize(v=0.0)
     x_flat = np.ravel(j)
@@ -115,7 +121,7 @@ for j in test_data:
     print(spikesum)
     print('estimate = ' + str(np.argmax(spikesum)))
    
-    pynn.reset()
+
 """
 #get spikes for plotting
 spikes_brains = list()
