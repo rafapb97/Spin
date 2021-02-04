@@ -1,6 +1,7 @@
 import nmpi
+import sys
 print("introduce script")
-inp = input()
+inp = str(sys.argv[1])
 client = nmpi.Client("rafaperez")
 job = client.submit_job(source="https://github.com/rafapb97/Spin",
                         platform=nmpi.SPINNAKER,
