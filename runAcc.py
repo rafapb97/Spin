@@ -16,8 +16,10 @@ dt = 0.1
 num_test=5
 
 #load data
-test_data = np.load("x_test.npz")['arr_0'][:num_test]
-test_labels = np.load("y_test.npz")['arr_0'][:num_test]
+#test_data = np.load("x_test.npz")['arr_0'][:num_test]
+#test_labels = np.load("y_test.npz")['arr_0'][:num_test]
+test_data = np.load("x_train.npz")['arr_0'][:num_test]
+test_labels = np.load("y_train.npz")['arr_0'][:num_test]
 #print("Corr is: " + str(train_labels['arr_0'][0]))
 print(test_labels)
 pynn.setup(dt)
