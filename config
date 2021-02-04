@@ -6,7 +6,7 @@ filename_snn = sCNN1
 
 [tools]
 evaluate_ann = True
-normalize = False
+normalize = True
 scale_weights_exp = False
 simulate = False
 
@@ -22,8 +22,8 @@ poisson_input = True
 input_rate = 1000
 
 [cell]
-v_thresh = 0.01
-tau_refrac = 0.1
+v_thresh = 1
+tau_refrac = 0
 v_reset = 0
 v_rest = 0
 cm = 1

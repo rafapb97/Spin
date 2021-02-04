@@ -19,7 +19,7 @@ num_test=10
 test_data = np.load("x_test.npz")['arr_0'][:num_test]
 test_labels = np.load("y_test.npz")['arr_0'][:num_test]
 #print("Corr is: " + str(train_labels['arr_0'][0]))
-
+#print(test_labels)
 pynn.setup(dt)
 pynn.set_number_of_neurons_per_core(pynn.IF_curr_exp, 64)
 
@@ -33,7 +33,7 @@ network = []
 #cell defaults
 cell_params = {
 'v_thresh' : 1,
-'tau_refrac' : 0.1,
+'tau_refrac' : 0,
 'v_reset' : 0,
 'v_rest' : 0,
 'cm' : 1,

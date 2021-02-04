@@ -61,7 +61,7 @@ layer5.record("spikes")
 network.append(layer5)
 
 #create connections
-#pynn.Projection(input, layer1)
+
 filenames=[
     "0Conv2D_30x30x16",
     "1Conv2D_28x28x32",

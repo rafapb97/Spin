@@ -14,7 +14,7 @@ config['paths'] = {
 config['tools'] = {
     'evaluate_ann': True,           # Test ANN on dataset before conversion.
     # Normalize weights for full dynamic range.
-    'normalize': False,
+    'normalize': True,
     'scale_weights_exp': False,
     'simulate': False
 }
@@ -37,8 +37,8 @@ config['input'] = {
 }
 
 config['cell'] = {
-    'v_thresh' : 0.01,
-    'tau_refrac' : 0.1,
+    'v_thresh' : 1,
+    'tau_refrac' : 0,
     'v_reset' : 0,
     'v_rest' : 0,
     'cm' : 1,
