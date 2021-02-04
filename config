@@ -6,7 +6,7 @@ filename_snn = sCNN1
 
 [tools]
 evaluate_ann = True
-normalize = True
+normalize = False
 scale_weights_exp = True
 simulate = False
 

@@ -14,7 +14,7 @@ config['paths'] = {
 config['tools'] = {
     'evaluate_ann': True,           # Test ANN on dataset before conversion.
     # Normalize weights for full dynamic range.
-    'normalize': True,
+    'normalize': False,
     'scale_weights_exp': True,
     'simulate': False
 }
