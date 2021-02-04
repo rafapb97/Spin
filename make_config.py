@@ -15,7 +15,7 @@ config['tools'] = {
     'evaluate_ann': True,           # Test ANN on dataset before conversion.
     # Normalize weights for full dynamic range.
     'normalize': False,
-    'scale_weights_exp': True,
+    'scale_weights_exp': False,
     'simulate': False
 }
 
