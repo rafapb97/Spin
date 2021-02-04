@@ -143,6 +143,10 @@ for spiketrain in spiketrains_all:
         eventdata.append(np.nonzero(dat)[0])
     plt.figure()
     plt.eventplot(eventdata)
+    plt.xlim(0, int(t / dt))
+    plt.ylim(-0.5, 5.5)
+    plt.xlabel("timesteps (0.1 ms)")
+    plt.ylabel("neuron no")
     plt.savefig("spikes trial: " + str(i) + ".png")
     i+=1
 
@@ -156,7 +160,7 @@ for i in range(len(pred_labels)):
     print(pred_labels[i])
     print(test_labels[i])
     print(np.dot(pred_labels[i], test_labels[i]))
-    if (np.dot(pred_labels[i], test_labels[i])):
+    if (np.dot(pred_labels[i], test_labels[i])>0):
         good_preds +=1
     else:
         bad_preds +=1
