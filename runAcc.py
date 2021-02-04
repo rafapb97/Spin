@@ -14,15 +14,17 @@ import pyNN.spiNNaker as pynn
 sim_time = 150
 dt = 0.1
 refrac = 0
-num_test=15
+start_test=0
+end_test= 7
+print("trials from "+str(start_test)+ "to "+str(end_test)
 pynn.setup(dt)
 pynn.set_number_of_neurons_per_core(pynn.IF_curr_exp, 64)
 weight_scale = 1
 rescale_fac = 1000/(1000*dt)
 
 #load data
-test_data = np.load("x_test.npz")['arr_0'][:num_test]
-test_labels = np.load("y_test.npz")['arr_0'][:num_test]
+test_data = np.load("x_test.npz")['arr_0'][start_test:end_test]
+test_labels = np.load("y_test.npz")['arr_0'][start_test:end_test]
 
 pred_labels = []
 
