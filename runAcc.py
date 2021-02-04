@@ -13,7 +13,7 @@ import pyNN.spiNNaker as pynn
 #set sim parameters
 sim_time = 50
 dt = 0.1
-num_test=2
+num_test=10
 
 #load data
 test_data = np.load("x_test.npz")['arr_0'][:num_test]
@@ -24,9 +24,6 @@ pynn.setup(dt)
 pynn.set_number_of_neurons_per_core(pynn.IF_curr_exp, 64)
 
 pred_labels = []
-#setup pynn
-#pynn.setup(dt)
-#pynn.set_number_of_neurons_per_core(pynn.IF_curr_exp, 64)
 #create network
 network = []
 
