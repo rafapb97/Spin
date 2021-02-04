@@ -11,9 +11,9 @@ import pyNN.spiNNaker as pynn
 #print (pynn.IF_cond_exp.default_parameters)
 
 #set sim parameters
-sim_time = 50
+sim_time = 150
 dt = 0.1
-num_test=2
+num_test=5
 
 #load data
 test_data = np.load("x_test.npz")['arr_0'][:num_test]
