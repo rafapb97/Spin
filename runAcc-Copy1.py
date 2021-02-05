@@ -34,7 +34,7 @@ network = []
 
 #cell defaults
 cell_params = {
-'v_thresh' : 0.5,
+'v_thresh' : 0.7,
 'tau_refrac' : refrac,
 'v_reset' : 0,
 'v_rest' : 0,
