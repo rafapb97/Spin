@@ -21,8 +21,6 @@ from mne.datasets import sample
 from mne.minimum_norm import read_inverse_operator, compute_source_psd
 from PIL import Image
 
-%matplotlib inline
-
 #set path
 path = 'D:/NISE_project_data/eeg-motor-movementimagery-dataset-1.0.0/files/'
 #path = '/home/matthijspals/physionet.org/files/eegmmidb/1.0.0'
