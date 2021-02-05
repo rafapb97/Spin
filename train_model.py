@@ -293,7 +293,7 @@ layer = Dense(units=5,
 model = Model(input_layer, layer)
 
 # compile the model
-opt = Adam(learning_rate = 3e-3)
+opt = Adam(learning_rate = 1e-3)
 model.compile(loss="categorical_crossentropy", optimizer=opt, metrics=["accuracy"])
 #print(model.summary())
 
@@ -311,7 +311,7 @@ class MyThresholdCallback(tf.keras.callbacks.Callback):
             
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 batch_size=32
-no_epochs= 48
+no_epochs= 30
 # Fit data to model
 history = model.fit(X_train,  y_train_OH,
           batch_size=batch_size,
