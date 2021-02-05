@@ -11,7 +11,7 @@ import pyNN.spiNNaker as pynn
 
 
 #set sim parameters
-sim_time = 150
+sim_time = 200
 dt = 0.1
 refrac = 0
 start_test=0
