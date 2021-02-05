@@ -1,20 +1,60 @@
 #!/bin/bash
+
+python train_model.py '1'
+python make_config.py
+python convert.py
+
+git add .
+git commit -m 'first subject'
+git push 
+
 python client.py 'runAcc.py'
 python client.py 'runAcc-Copy1.py'
 python client.py 'runAcc-Copy2.py'
 
-python client.py 'runAcc-Copy3.py'
-python client.py 'runAcc-Copy4.py'
-python client.py 'runAcc-Copy5.py'
+python train_model.py '7'
+python make_config.py
+python convert.py
 
-python client.py 'runAcc-Copy6.py'
-python client.py 'runAcc-Copy7.py'
-python client.py 'runAcc-Copy8.py'
+git add .
+git commit -m 'second subject'
+git push 
 
-python client.py 'runAcc-Copy9.py'
-python client.py 'runAcc-Copy10.py'
-python client.py 'runAcc-Copy11.py'
+python client.py 'runAcc.py'
+python client.py 'runAcc-Copy1.py'
+python client.py 'runAcc-Copy2.py'
 
-python client.py 'runAcc-Copy12.py'
-python client.py 'runAcc-Copy13.py'
-python client.py 'runAcc-Copy14.py'
+python train_model.py '12'
+python make_config.py
+python convert.py
+
+git add .
+git commit -m 'third subject'
+git push 
+
+python client.py 'runAcc.py'
+python client.py 'runAcc-Copy1.py'
+python client.py 'runAcc-Copy2.py'
+python train_model.py '15'
+python make_config.py
+python convert.py
+
+git add .
+git commit -m 'forth subject'
+git push 
+
+python client.py 'runAcc.py'
+python client.py 'runAcc-Copy1.py'
+python client.py 'runAcc-Copy2.py'
+
+python train_model.py '31'
+python make_config.py
+python convert.py
+
+git add .
+git commit -m 'fifth subject'
+git push 
+
+python client.py 'runAcc.py'
+python client.py 'runAcc-Copy1.py'
+python client.py 'runAcc-Copy2.py'

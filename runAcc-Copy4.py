@@ -14,8 +14,8 @@ import pyNN.spiNNaker as pynn
 sim_time = 150
 dt = 0.1
 refrac = 0
-start_test=24
-end_test= 30
+start_test=28
+end_test= 35
 print("trials from "+str(start_test)+ "to "+str(end_test)
 pynn.setup(dt)
 pynn.set_number_of_neurons_per_core(pynn.IF_curr_exp, 64)
