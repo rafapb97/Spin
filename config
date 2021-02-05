@@ -1,7 +1,7 @@
 [paths]
 path_wd = C:\Users\rjpbe\Desktop\TUM\NISE\project\fork\Spin
 dataset_path = C:\Users\rjpbe\Desktop\TUM\NISE\project\fork\Spin
-filename_ann = CNN_60
+filename_ann = bm16-0.007300000000000002
 filename_snn = sCNN1
 
 [tools]
